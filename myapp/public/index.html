@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"  ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book</title>
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-controller="myCtrl">
+    <h1>Book Management</h1>
+    <input type="text" ng-model="searchText" placeholder="Search book..." style="padding:8px; width:200px;">
+    <br><br>
+    <table border="1" align="center">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Publish Year</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+
+        <tr ng-repeat= "b in books | filter:searchText track by $index">
+            <td>{{$index +1}}</td>
+            <td>{{b.name}}</td>
+            <td>{{b.author}}</td>
+            <td>{{b.publish_year}}</td>
+            <td>{{b.price}}</td>
+            <td>
+                <button ng-click="deleteBook(b._id)" style="background-color: red; color: white; padding: 5px; font-size: 16px;">Delete</button>
+                <button ng-click="editBook(b)" style="background-color: rgb(23, 104, 225); color: white; padding: 5px; font-size: 16px;">Edit</button>
+            </td>
+        </tr>
+    </table><br><br>
+    <hr><br>
+    <h3 align="center">Add New Book</h3>
+    <form ng-submit= "editMode ? updateBook() : addBook()"  align="center" >
+        Name: <input type="text" ng-model="newBook.name"><br><br>
+        Author: <input type="text" ng-model="newBook.author"><br><br>
+        Publish Year: <input type="number" ng-model="newBook.publish_year"><br><br>
+        Price: <input type="number" ng-model="newBook.price"><br><br>
+        <button type="submit" style="background-color: green; color: white;border-color: green; border-radius: 5px; padding: 5px 10px; font-size: 16px; " ng-if="!editMode">Add Book</button>
+        <button type="submit" style="background-color: green; color: white;border-color: green; border-radius: 5px; padding: 5px 10px; font-size: 16px; " ng-if="editMode" ng-click="updateBook()">Update Book  </button>
+
+    </form>
+</body>
+</html>
